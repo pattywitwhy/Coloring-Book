@@ -10,7 +10,8 @@ var colorBrown = "#986928";
 
 var curColor = colorPurple;
 var clickColor = new Array();
-
+var clickSize = new Array();
+var curSize = "normal";
 
 
 function prepareCanvas() {
@@ -58,23 +59,26 @@ function addClick(x, y, dragging)
   clickX.push(x);
   clickY.push(y);
   clickDrag.push(dragging);
+  clickColor.push(curColor);
+  clickSize.push(curSize);
 }
+
+
 function redraw(){
-  /* context.strokeStyle = "#df4b26"; */
   context.lineJoin = "round";
-  context.lineWidth = 5;
-      
+  /* context.lineWidth = 5; */
   for(var i=0; i < clickX.length; i++)
   {   
     context.beginPath();
     if(clickDrag[i] && i){
-      contex.moveTo(clickX[i-1], clickY[i-1]);
+      context.moveTo(clickX[i-1], clickY[i-1]);
     }else{
       context.moveTo(clickX[i]-1, clickY[i]);
     }
     context.lineTo(clickX[i], clickY[i]);
     context.closePath();
     context.strokeStyle = clickColor[i];
+    context.lineWidth = radius;
     context.stroke();
   }
 }
