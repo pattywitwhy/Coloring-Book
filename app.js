@@ -3,11 +3,21 @@ var clickY = new Array();
 var clickDrag = new Array();
 var paint;
 
+var colorPurple = "#cb3594";
+var colorGreen = "#659b41";
+var colorYellow = "#ffcf33";
+var colorBrown = "#986928";
+
+var curColor = colorPurple;
+var clickColor = new Array();
+
+
+
 function prepareCanvas() {
   var canvasDiv = document.getElementById('canvasDiv');
     canvas = document.createElement('canvas');
-    canvas.setAttribute('width', canvasWidth);
-    canvas.setAttribute('height', canvasHeight);
+    // canvas.setAttribute('width', canvasWidth);
+    // canvas.setAttribute('height', canvasHeight);
     canvas.setAttribute('id', 'canvas');
     canvasDiv.appendChild(canvas);
     if (typeof G_vmlCanvasManager != 'undefined') {
@@ -49,24 +59,30 @@ function addClick(x, y, dragging)
   clickY.push(y);
   clickDrag.push(dragging);
 }
-
 function redraw(){
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-  
-  context.strokeStyle = "#df4b26";
+  /* context.strokeStyle = "#df4b26"; */
   context.lineJoin = "round";
   context.lineWidth = 5;
       
-  for(var i=0; i < clickX.length; i++) {    
+  for(var i=0; i < clickX.length; i++)
+  {   
     context.beginPath();
     if(clickDrag[i] && i){
-      context.moveTo(clickX[i-1], clickY[i-1]);
-     }else{
-       context.moveTo(clickX[i]-1, clickY[i]);
-     }
-     context.lineTo(clickX[i], clickY[i]);
-     context.closePath();
-     context.stroke();
+      contex.moveTo(clickX[i-1], clickY[i-1]);
+    }else{
+      context.moveTo(clickX[i]-1, clickY[i]);
+    }
+    context.lineTo(clickX[i], clickY[i]);
+    context.closePath();
+    context.strokeStyle = clickColor[i];
+    context.stroke();
   }
 }
 
+function addClick(x, y, dragging)
+{
+  clickX.push(x);
+  clickY.push(y);
+  clickDrag.push(dragging);
+  clickColor.push(curColor);
+}
